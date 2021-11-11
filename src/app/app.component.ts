@@ -25,7 +25,7 @@ import {MenuItem} from 'primeng/api';
 
 export class AppComponent { 
 
-    
+    page: string = 'fleet';
     policies: Policy[];
     printMenuItems: MenuItem[];
     actionMenuItems: MenuItem[];
@@ -71,4 +71,7 @@ export class AppComponent {
 
     }
 
+    ShowPage(pageName: string){
+        this.page = pageName;
+    }
 }

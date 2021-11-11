@@ -7,23 +7,150 @@
         label="Naujas parko dok."
         icon="pi pi-plus"
         iconPos="left"
-        styleClass="p-button-secondary p-mb-2 p-lg-4 p-mb-lg-0 btn"
+        (click)="showPage('new-fleet');"
+        styleClass="p-button-secondary p-mb-2 p-mr-2 btn"
       ></p-button>
       <p-button
         label="Atidaryti"
         icon="pi pi-folder-open"
         iconPos="left"
-        styleClass="p-button-secondary p-mb-2 p-lg-4 p-mb-lg-0 btn"
+        (click)="showPage('fleet');"
+        styleClass="p-button-secondary p-mb-2 p-mr-2 btn"
       ></p-button>
-    </div>
-
-   
-  
+    </div>  
   </p-toolbar>
 </div>
 
+<div *ngIf="page == 'fleet'">
   <p-tabView>
-    <p-tabPanel header="Parko duomenys">
+
+    <p-tabPanel header="Parkas">
+      <h3><b>UAB TRANSPORTO ĮMONĖ</b> parko draudimas</h3> 
+      <h5>Nr: PARK 00000001</h5>
+      <div class="card">
+        <p-table
+          [value]="policies"
+          [scrollable]="true"
+          scrollHeight="550px"
+          [rowHover]="true"
+          resizableColumns="true"
+          columnResizeMode="expand"
+          styleClass="p-datatable-gridline"
+        >
+          <ng-template pTemplate="caption">
+            <div class="table-header">
+              Transporto priemonės
+              <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input
+                  pInputText
+                  type="text"
+                  (input)="dt.filterGlobal($event.target.value, 'contains')"
+                  placeholder="Paieška"
+                />
+              </span>
+            </div>
+          </ng-template>
+    
+          <ng-template pTemplate="header">
+            <tr>
+              <th style="max-width:50px;">
+                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+              </th>
+              <th pResizableColumn pSortableColumn="policy">Poliso numeris</th>
+              <th pResizableColumn pSortableColumn="status">Statusas</th>
+              <th pResizableColumn pSortableColumn="beginDate">Pradžia</th>
+              <th pResizableColumn pSortableColumn="endDate">Pabaiga</th>
+              <th pResizableColumn pSortableColumn="vehicle.type">Tipas</th>
+              <th pResizableColumn pSortableColumn="vehicle.make">Markė</th>
+              <th pResizableColumn pSortableColumn="vehicle.model">Modelis</th>
+              <th pResizableColumn>Valstybinis numeris</th>
+              <th pResizableColumn>VIN</th>
+              <th pResizableColumn>Vertė</th>
+              <th pResizableColumn>Įmoka</th>
+              <th pResizableColumn pSortableColumn="additionalInsurance.name">Papildomi dr.</th>
+              <th pResizableColumn>Papild. dr. įmoka</th>
+            </tr>
+          </ng-template>
+    
+          <ng-template pTemplate="body" let-policy>
+            <tr
+              class="p-selectable-row"
+              [ngClass]="{ 'row-not-imported': policy.status == 0 }"
+            >
+              <td style="max-width: 50px">
+                <p-tableCheckbox
+                  [value]="policy"
+                  *ngIf="policy.status == 2"
+                ></p-tableCheckbox>
+              </td>
+              <td>{{ policy.policy }}</td>
+              <td>
+                <p-tag *ngIf="policy.status == 1" severity="danger">
+                  {{ policy.error }}
+                </p-tag>
+              </td>
+              <td>{{ policy.beginDate }}</td>
+              <td>{{ policy.endDate }}</td>
+              <td>{{ policy.vehicle.type }}</td>
+              <td>{{ policy.vehicle.make }}</td>
+              <td>{{ policy.vehicle.model }}</td>
+              <td>{{ policy.vehicle.plateNo }}</td>
+              <td>{{ policy.vehicle.vinNo }}</td>
+              <td>{{ policy.vehicle.value }}</td>
+              <td>{{ policy.premium }}</td>
+              <td>{{ policy.additionalInsurance.name }}</td>
+              <td>
+                {{ policy.additionalInsurance.premium }}
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+      <div class="card right">
+        <p-toolbar>
+          <div class="p-toolbar-group-left">
+            <p-button
+              label="Įtraukti naują"
+              icon="pi pi-plus"
+              iconPos="left"
+              styleClass="p-button-primary p-mb-2 p-mr-2 btn"
+            ></p-button>
+            <p-button
+              label="Importuoti"
+              icon="pi pi-arrow-circle-down"
+              iconPos="left"
+              styleClass="p-button-primary p-mb-2 p-mr-2 btn"
+            ></p-button>
+         
+       
+          <p-splitButton
+            label="Pažymėtiems"
+            icon="pi pi-ellipsis-v"
+            (onClick)="save()"
+            [model]="actionMenuItems"
+            styleClass="p-button-secondary p-mb-2 p-mr-2 btn"
+          >
+          </p-splitButton>
+        </div>
+    
+          <div class="p-toolbar-group-right">
+            <p-splitButton
+              label="Spausdinti"
+              icon="pi pi-file-pdf"
+              (onClick)="save()"
+              [model]="printMenuItems"
+              styleClass="p-button-secondary p-mb-2 p-mr-2 btn"
+            >
+            </p-splitButton>
+          </div>
+        </p-toolbar>
+      </div>
+    </p-tabPanel>
+
+    
+    <p-tabPanel header="Sutarties sąlygos">
+      <h2>Pagrindiniai duomenys</h2>
       <div class="p-fluid">
         <div class="p-field p-grid">
           <label for="firstname4" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0"
@@ -98,18 +225,17 @@
           <div class="p-col-6 p-md-10"></div>
         </div>
       </div>
-    </p-tabPanel>
-    <p-tabPanel header="Sutarties sąlygos">
+      <h2>Kitos sąlygos</h2>
       <p-table
         [value]="parkConditions"
-        sortField="conditionType"
+        sortField="insType"
         sortMode="single"
         [scrollable]="true"
         scrollHeight="300px"
         rowGroupMode="subheader"
-        groupRowsBy="conditionType"
+        groupRowsBy="insType"
         responsiveLayout="scroll"
-        styleClass="p-datatable-sm"
+        styleClass="p-datatable-sm p-datatable-gridline"
       >
         <ng-template pTemplate="header">
           <tr>
@@ -124,7 +250,7 @@
           <tr pRowGroupHeader>
             <td colspan="5">
               <span class="p-text-bold p-ml-2">{{
-                condition.conditionType
+                condition.insType
               }}</span>
             </td>
           </tr>
@@ -133,7 +259,7 @@
         <ng-template pTemplate="body" let-condition let-rowIndex="rowIndex">
           <tr>
             <td style="min-width:300px">
-              {{ condition.insType }}
+              {{ condition.conditionType }}
             </td>
             <td style="min-width:120px">
               {{ condition.ageFrom }}
@@ -174,125 +300,14 @@
       </p-table>
     </p-tabPanel>
   </p-tabView>
-
-  <div class="card">
-    <p-table
-      [value]="policies"
-      [scrollable]="true"
-      scrollHeight="550px"
-      [rowHover]="true"
-      resizableColumns="true"
-      columnResizeMode="expand"
-      styleClass="p-datatable-sm"
-    >
-      <ng-template pTemplate="caption">
-        <div class="table-header">
-          Transporto priemonės
-          <span class="p-input-icon-left">
-            <i class="pi pi-search"></i>
-            <input
-              pInputText
-              type="text"
-              (input)="dt.filterGlobal($event.target.value, 'contains')"
-              placeholder="Paieška"
-            />
-          </span>
-        </div>
-      </ng-template>
-
-      <ng-template pTemplate="header">
-        <tr>
-          <th style="max-width:50px;">
-            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-          </th>
-          <th pResizableColumn pSortableColumn="policy">Poliso numeris</th>
-          <th pResizableColumn pSortableColumn="status">Statusas</th>
-          <th pResizableColumn pSortableColumn="beginDate">Pradžia</th>
-          <th pResizableColumn pSortableColumn="endDate">Pabaiga</th>
-          <th pResizableColumn pSortableColumn="vehicle.type">Tipas</th>
-          <th pResizableColumn pSortableColumn="vehicle.make">Markė</th>
-          <th pResizableColumn pSortableColumn="vehicle.model">Modelis</th>
-          <th pResizableColumn>Valstybinis numeris</th>
-          <th pResizableColumn>VIN</th>
-          <th pResizableColumn>Vertė</th>
-          <th pResizableColumn>Įmoka</th>
-          <th pResizableColumn pSortableColumn="additionalInsurance.name">Papildomi dr.</th>
-          <th pResizableColumn>Papild. dr. įmoka</th>
-        </tr>
-      </ng-template>
-
-      <ng-template pTemplate="body" let-policy>
-        <tr
-          class="p-selectable-row"
-          [ngClass]="{ 'row-not-imported': policy.status == 0 }"
-        >
-          <td style="max-width: 50px">
-            <p-tableCheckbox
-              [value]="policy"
-              *ngIf="policy.status == 2"
-            ></p-tableCheckbox>
-          </td>
-          <td>{{ policy.policy }}</td>
-          <td>
-            <p-tag *ngIf="policy.status == 1" severity="danger">
-              {{ policy.error }}
-            </p-tag>
-          </td>
-          <td>{{ policy.beginDate }}</td>
-          <td>{{ policy.endDate }}</td>
-          <td>{{ policy.vehicle.type }}</td>
-          <td>{{ policy.vehicle.make }}</td>
-          <td>{{ policy.vehicle.model }}</td>
-          <td>{{ policy.vehicle.plateNo }}</td>
-          <td>{{ policy.vehicle.vinNo }}</td>
-          <td>{{ policy.vehicle.value }}</td>
-          <td>{{ policy.premium }}</td>
-          <td>{{ policy.additionalInsurance.name }}</td>
-          <td>
-            {{ policy.additionalInsurance.premium }}
-          </td>
-        </tr>
-      </ng-template>
-    </p-table>
+</div>
+  
+<div *ngIf="page == 'open'">
+  open page
   </div>
 
-  <div class="card right">
-    <p-toolbar>
-      <div class="p-toolbar-group-left">
-        <p-button
-          label="Įtraukti naują"
-          icon="pi pi-plus"
-          iconPos="left"
-          styleClass="p-button-primary p-mb-2 p-mr-2 btn"
-        ></p-button>
-        <p-button
-          label="Importuoti"
-          icon="pi pi-arrow-circle-down"
-          iconPos="left"
-          styleClass="p-button-primary p-mb-2 p-mr-2 btn"
-        ></p-button>
-     
-   
-      <p-splitButton
-        label="Pažymėtiems"
-        icon="pi pi-ellipsis-v"
-        (onClick)="save()"
-        [model]="actionMenuItems"
-        styleClass="p-button-secondary p-mb-2 p-mr-2"
-      >
-      </p-splitButton>
-    </div>
-
-      <div class="p-toolbar-group-right">
-        <p-splitButton
-          label="Spausdinti"
-          icon="pi pi-file-pdf"
-          (onClick)="save()"
-          [model]="printMenuItems"
-          styleClass="p-button-secondary p-mb-2 p-mr-2"
-        >
-        </p-splitButton>
-      </div>
-    </p-toolbar>
+  <div *ngIf="page == 'new-fleet'">
+    new fleet
   </div>
+
 </div>
