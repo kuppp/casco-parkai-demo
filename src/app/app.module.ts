@@ -61,7 +61,7 @@ import { Variables } from './global-variables';
   ],
   declarations: [ AppComponent, NewFleetComponent, OpenFleetComponent, FleetInfoComponent ],
   bootstrap:    [ AppComponent ],
-  providers: [PolicyListService]
+  providers: [PolicyListService, Variables]
 })
 
 export class AppModule { }

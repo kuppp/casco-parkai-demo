@@ -38,6 +38,5 @@ export class AppComponent {
 
     ShowPage(pageName: string){
         this.page = pageName;
-        Global.Variables.page = pageName;
     }
 }
