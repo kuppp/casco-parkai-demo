@@ -30,7 +30,7 @@ import {SplitButtonModule} from 'primeng/splitbutton';
 import {ToolbarModule} from 'primeng/toolbar';
 import {TabViewModule} from 'primeng/tabview';
 import {MenubarModule} from 'primeng/menubar';
-
+import {SplitterModule} from 'primeng/splitter';
 import { Variables } from './global-variables';
 
 @NgModule({
@@ -53,7 +53,7 @@ import { Variables } from './global-variables';
     ToggleButtonModule,
     DividerModule,
     BadgeModule,  MenubarModule,
-    TagModule, SplitButtonModule, ToolbarModule, TabViewModule,
+    TagModule, SplitButtonModule, ToolbarModule, TabViewModule,SplitterModule,
     RouterModule.forRoot([
       {path:'',component: AppComponent}
 

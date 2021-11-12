@@ -15,6 +15,9 @@ export class FleetInfoComponent implements OnInit {
   paymentSchedule: Schedule[];
   parkConditions: Condition[];
 
+  panel1: number = 100;
+  panel2: number = 0;
+
   constructor(private PolicyListService: PolicyListService) { }
 
   ngOnInit() {
