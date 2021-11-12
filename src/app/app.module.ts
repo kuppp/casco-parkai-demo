@@ -7,6 +7,9 @@ import {RouterModule} from '@angular/router';
 
 import { AppComponent }   from './app.component';
 ;import { PolicyListService } from './policyservice';
+import { NewFleetComponent } from './new-fleet/new-fleet.component';
+import { OpenFleetComponent } from './open-fleet/open-fleet.component';
+import { FleetInfoComponent } from './fleet-info/fleet-info.component';
 
 import {TableModule} from 'primeng/table';
 import {ToastModule} from 'primeng/toast';
@@ -28,6 +31,7 @@ import {ToolbarModule} from 'primeng/toolbar';
 import {TabViewModule} from 'primeng/tabview';
 import {MenubarModule} from 'primeng/menubar';
 
+import { Variables } from './global-variables';
 
 @NgModule({
   imports: [
@@ -55,8 +59,8 @@ import {MenubarModule} from 'primeng/menubar';
 
 		])
   ],
-  declarations: [ AppComponent ],
-  bootstrap:    [ AppComponent ],
+  declarations: [ AppComponent, NewFleetComponent, OpenFleetComponent, FleetInfoComponent ],
+  bootstrap:    [ AppComponent, Variables ],
   providers: [PolicyListService]
 })
 
