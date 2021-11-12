@@ -60,7 +60,7 @@ import { Variables } from './global-variables';
 		])
   ],
   declarations: [ AppComponent, NewFleetComponent, OpenFleetComponent, FleetInfoComponent ],
-  bootstrap:    [ AppComponent, Variables ],
+  bootstrap:    [ AppComponent ],
   providers: [PolicyListService]
 })
 
