@@ -4,8 +4,47 @@
     <h3><b>UAB TRANSPORTO ĮMONĖ</b> parko draudimas</h3> 
     <h5>Nr: PARK 00000001</h5>
    
-    <p-splitter [panelSizes]="[panel1,panel2]">
-    <ng-template pTemplate>
+     
+    <div class="card right">
+    <p-toolbar>
+      <div class="p-toolbar-group-left">
+        <p-button
+          label="Įtraukti naują"
+          icon="pi pi-plus"
+          iconPos="left"
+          styleClass="p-button-primary p-mb-2 p-mr-2 btn"
+        ></p-button>
+        <p-button
+          label="Importuoti"
+          icon="pi pi-arrow-circle-down"
+          iconPos="left"
+          styleClass="p-button-primary p-mb-2 p-mr-2 btn"
+        ></p-button>
+     
+   
+      <p-splitButton
+        label="Pažymėtiems"
+        icon="pi pi-ellipsis-v"
+        (onClick)="save()"
+        [model]="actionMenuItems"
+        styleClass="p-button-secondary p-mb-2 p-mr-2 btn"
+      >
+      </p-splitButton>
+      <p-splitButton
+      label="Spausdinti"
+      icon="pi pi-file-pdf"
+      (onClick)="save()"
+      [model]="printMenuItems"
+      styleClass="p-button-secondary p-mb-2 p-mr-2 btn"
+    >
+    </p-splitButton>
+    </div>
+
+     
+       
+    
+    </p-toolbar>
+  </div>
 
       <p-table
         [value]="policies"
@@ -86,54 +125,8 @@
           </tr>
         </ng-template>
       </p-table>
-    </ng-template>
-    <ng-template pTemplate *ngIf="showMoreInfo">
-        <div class="p-col p-d-flex p-ai-center p-jc-center">
-            Panel 2
-        </div>
-    </ng-template>
-</p-splitter>
 
- 
-    <div class="card right">
-      <p-toolbar>
-        <div class="p-toolbar-group-left">
-          <p-button
-            label="Įtraukti naują"
-            icon="pi pi-plus"
-            iconPos="left"
-            styleClass="p-button-primary p-mb-2 p-mr-2 btn"
-          ></p-button>
-          <p-button
-            label="Importuoti"
-            icon="pi pi-arrow-circle-down"
-            iconPos="left"
-            styleClass="p-button-primary p-mb-2 p-mr-2 btn"
-          ></p-button>
-       
-     
-        <p-splitButton
-          label="Pažymėtiems"
-          icon="pi pi-ellipsis-v"
-          (onClick)="save()"
-          [model]="actionMenuItems"
-          styleClass="p-button-secondary p-mb-2 p-mr-2 btn"
-        >
-        </p-splitButton>
-      </div>
-  
-        <div class="p-toolbar-group-right">
-          <p-splitButton
-            label="Spausdinti"
-            icon="pi pi-file-pdf"
-            (onClick)="save()"
-            [model]="printMenuItems"
-            styleClass="p-button-secondary p-mb-2 p-mr-2 btn"
-          >
-          </p-splitButton>
-        </div>
-      </p-toolbar>
-    </div>
+
   </p-tabPanel>
 
   
