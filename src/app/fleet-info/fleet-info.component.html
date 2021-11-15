@@ -33,7 +33,7 @@
   
         <ng-template pTemplate="header">
           <tr>
-            <th style="max-width:50px;">
+            <th style="max-width:30px;margin:2px;padding:5px;">
               <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
             </th>
             <th pResizableColumn pSortableColumn="policy">Poliso numeris</th>
@@ -58,7 +58,7 @@
             [ngClass]="{ 'row-not-imported': policy.status == 0 }"
             (click)="showMoreInfo = true;panel1=80;panel2=20;"
           >
-            <td style="max-width: 50px">
+            <td  style="max-width:30px">
               <p-tableCheckbox
                 [value]="policy"
                 *ngIf="policy.status == 2"
